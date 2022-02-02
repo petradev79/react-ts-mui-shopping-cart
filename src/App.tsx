@@ -40,9 +40,33 @@ const App = () => {
   const getItemsHandler = (items: CartItemType[]) =>
     items.reduce((acc: number, item) => acc + item.quantity, 0);
 
-  const addToCartHandler = (clickedItem: CartItemType) => null;
+  const addToCartHandler = (clickedItem: CartItemType) => {
+    setCartItems(prevState => {
+      const isItemInCart = prevState.find(item => item.id === clickedItem.id);
 
-  const removeFromCartHandler = () => null;
+      if (isItemInCart) {
+        return prevState.map(item =>
+          item.id === clickedItem.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+      }
+      return [...prevState, { ...clickedItem, quantity: 1 }];
+    });
+  };
+
+  const removeFromCartHandler = (id: number) => {
+    setCartItems(prevState =>
+      prevState.reduce((acc, item) => {
+        if (item.id === id) {
+          if (item.quantity === 1) return acc;
+          return [...acc, { ...item, quantity: item.quantity - 1 }];
+        } else {
+          return [...acc, item];
+        }
+      }, [] as CartItemType[])
+    );
+  };
 
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Something went wrong ...</div>;
@@ -69,7 +93,7 @@ const App = () => {
         </Badge>
       </IconButton>
       <Grid container spacing={3}>
-        {data?.map((item) => (
+        {data?.map(item => (
           <Grid item key={item.id} xs={12} sm={4}>
             <Item item={item} addToCart={addToCartHandler} />
           </Grid>
