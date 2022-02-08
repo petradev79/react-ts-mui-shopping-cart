@@ -20,6 +20,9 @@ const DetailsItem: React.FC<Props> = ({ product, addToCart }) => {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
 
+  const category =
+    product.category.charAt(0).toUpperCase() + product.category.slice(1);
+
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
@@ -32,9 +35,7 @@ const DetailsItem: React.FC<Props> = ({ product, addToCart }) => {
             {product.title}
           </Typography>
           <Typography variant='subtitle2' color='textSecondary'>
-            Category:{' '}
-            {product.category.charAt(0).toUpperCase() +
-              product.category.slice(1)}
+            Category: {category}
           </Typography>
         </div>
 

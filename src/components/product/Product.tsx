@@ -46,6 +46,17 @@ const Product: React.FC<Props> = ({
 }) => {
   const classes = useStyles();
 
+  const title =
+    product.title.length > 30
+      ? product.title.substring(0, 33) + '...'
+      : product.title;
+  const subheader =
+    product.category.charAt(0).toUpperCase() + product.category.slice(1);
+  const description = product.description.substring(0, 100) + '...';
+  const color = cartItems.find((item) => item.id === product.id)
+    ? 'secondary'
+    : 'inherit';
+
   return (
     <Card elevation={1} className={classes.card}>
       <CardHeader
@@ -54,14 +65,8 @@ const Product: React.FC<Props> = ({
             {product.category[0].toUpperCase()}
           </Avatar>
         }
-        title={
-          product.title.length > 30
-            ? product.title.substring(0, 33) + '...'
-            : product.title
-        }
-        subheader={
-          product.category.charAt(0).toUpperCase() + product.category.slice(1)
-        }
+        title={title}
+        subheader={subheader}
       />
       <CardMedia
         className={classes.media}
@@ -77,18 +82,12 @@ const Product: React.FC<Props> = ({
           Price: ${product.price.toFixed(2)}
         </Typography>
         <Typography variant='body2' color='textSecondary'>
-          {product.description.substring(0, 100) + '...'}
+          {description}
         </Typography>
       </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label='add to cart' onClick={() => addToCart(product)}>
-          <Favorite
-            color={
-              cartItems.find((item) => item.id === product.id)
-                ? 'secondary'
-                : 'inherit'
-            }
-          />
+          <Favorite color={color} />
         </IconButton>
         <Button
           style={{ color: categoryColor(product) }}

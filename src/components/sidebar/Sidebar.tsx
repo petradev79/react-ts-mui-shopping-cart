@@ -54,8 +54,14 @@ const Sidebar: React.FC<Props> = ({ category, getCategory }) => {
   ];
 
   const formatCategory = (value: string) => {
-    if (value === '') return '';
-    return `category/${value}`;
+    let formatValue;
+
+    if (value !== '') {
+      formatValue = `category/${value}`;
+    } else {
+      formatValue = '';
+    }
+    return category === formatValue ? classes.active : '';
   };
 
   return (
@@ -73,9 +79,7 @@ const Sidebar: React.FC<Props> = ({ category, getCategory }) => {
           <div
             key={item.text}
             onClick={() => getCategory(`${item.value}`)}
-            className={
-              category === formatCategory(item.value) ? classes.active : ''
-            }
+            className={formatCategory(item.value)}
           >
             <ListItem button>
               <ListItemIcon>{item.icon}</ListItemIcon>

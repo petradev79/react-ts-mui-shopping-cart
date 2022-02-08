@@ -24,21 +24,21 @@ type Props = {
 const CartItem: React.FC<Props> = ({ item, addToCart, removeFromCart }) => {
   const classes = useStyles();
 
+  const title =
+    item.title.length > 30 ? item.title.substring(0, 33) + '...' : item.title;
+  const total = (item.quantity * item.price).toFixed(2);
+
   return (
     <Card elevation={1} className={classes.cartItem}>
       <CardHeader
         className={classes.header}
         avatar={<Avatar src={item.image} />}
-        title={
-          item.title.length > 30
-            ? item.title.substring(0, 33) + '...'
-            : item.title
-        }
+        title={title}
         subheader={`Price: $${item.price.toFixed(2)}`}
       />
       <CardActions disableSpacing className={classes.actions}>
         <Typography variant='body1' color='textPrimary'>
-          Total: ${(item.quantity * item.price).toFixed(2)}
+          Total: ${total}
         </Typography>
         <div className={classes.btns}>
           <IconButton

@@ -13,7 +13,6 @@ import Sidebar from '../sidebar/Sidebar';
 import Header from '../header/Header';
 import { LinearProgress, makeStyles } from '@material-ui/core';
 import Cart from '../cart/Cart';
-
 //Styles
 export const drawerWidth = 260;
 const useStyles = makeStyles({

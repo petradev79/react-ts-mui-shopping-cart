@@ -17,6 +17,16 @@ const useStyles = makeStyles((theme) => {
       textAlign: 'center',
       marginTop: theme.spacing(8),
     },
+    puls: {
+      animation: `$pulsing 2s infinite ${theme.transitions.easing.easeInOut}`,
+      background: `linear-gradient(to right, transparent 50%, ${theme.palette.secondary.light} 50%) left`,
+      'background-size': '200%',
+    },
+    '@keyframes pulsing': {
+      '100%': {
+        'background-position': 'right',
+      },
+    },
   };
 });
 
@@ -32,7 +42,10 @@ const Details: React.FC<Props> = ({ product, addToCart }) => {
 
   return (
     <div className={classes.wrapper}>
-      <Button onClick={() => navigate('/')}>
+      <Button
+        onClick={() => navigate('/')}
+        className={noProduct ? classes.puls : ''}
+      >
         <NavigateBeforeOutlined /> Back to home page
       </Button>
       {noProduct && (
