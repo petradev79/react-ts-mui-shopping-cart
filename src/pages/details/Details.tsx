@@ -1,4 +1,5 @@
 // Components
+import DetailsItem from '../../components/details-item/DetailsItem';
 import { Button, makeStyles, Typography } from '@material-ui/core';
 import { NavigateBeforeOutlined } from '@material-ui/icons';
 import { useNavigate } from 'react-router-dom';
@@ -12,74 +13,38 @@ const useStyles = makeStyles((theme) => {
       marginTop: theme.spacing(13),
       width: '100%',
     },
-    card: {
+    noProduct: {
+      textAlign: 'center',
       marginTop: theme.spacing(8),
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      width: '100%',
-      maxWidth: '960px',
-      marginInline: 'auto',
-    },
-    content: {
-      flex: 0.8,
-    },
-    title: {
-      marginBottom: theme.spacing(2),
-    },
-    text: {
-      marginTop: theme.spacing(3),
-    },
-    img: {
-      height: '500px',
-      flex: 1,
     },
   };
 });
 
 type Props = {
   product: ProductType;
+  addToCart: (clickedItem: ProductType) => void;
 };
 
-const Details: React.FC<Props> = ({ product }) => {
+const Details: React.FC<Props> = ({ product, addToCart }) => {
   const classes = useStyles();
   const navigate = useNavigate();
-  console.log(product);
+  const noProduct = Object.keys(product).length === 0;
 
   return (
     <div className={classes.wrapper}>
       <Button onClick={() => navigate('/')}>
-        <NavigateBeforeOutlined /> Back to main page
+        <NavigateBeforeOutlined /> Back to home page
       </Button>
-      <div className={classes.card}>
-        <div className={classes.content}>
-          <Typography variant='h5' color='primary' className={classes.title}>
-            {product.title}
-          </Typography>
-          <Typography variant='subtitle1' color='textPrimary'>
-            Category:{' '}
-            {product.category.charAt(0).toUpperCase() +
-              product.category.slice(1)}
-          </Typography>
-          <Typography variant='subtitle1' color='textPrimary'>
-            Price: ${product.price.toFixed(2)}
-          </Typography>
-          <Typography
-            variant='body1'
-            color='textSecondary'
-            className={classes.text}
-          >
-            {product.description}
-          </Typography>
-        </div>
-        <div className={classes.img}>
-          <img
-            src={product.image}
-            alt={product.title}
-            style={{ height: '100%', float: 'right' }}
-          />
-        </div>
-      </div>
+      {noProduct && (
+        <Typography
+          variant='h5'
+          color='textSecondary'
+          className={classes.noProduct}
+        >
+          Please go to home page and choose product
+        </Typography>
+      )}
+      {!noProduct && <DetailsItem product={product} addToCart={addToCart} />}
     </div>
   );
 };

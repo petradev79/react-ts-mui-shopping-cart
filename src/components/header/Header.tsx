@@ -6,7 +6,7 @@ import {
   Toolbar,
   Typography,
 } from '@material-ui/core';
-import { AddShoppingCartOutlined } from '@material-ui/icons';
+import { ShoppingCartOutlined } from '@material-ui/icons';
 //Styles
 import { useStyles } from './Header.styles';
 
@@ -27,7 +27,7 @@ const Header: React.FC<Props> = ({ getItems, openCart }) => {
         <Typography>Mario</Typography>
         <IconButton className={classes.btn} onClick={openCart}>
           <Badge badgeContent={getItems} color='primary'>
-            <AddShoppingCartOutlined color='secondary' />
+            <ShoppingCartOutlined color='secondary' />
           </Badge>
         </IconButton>
       </Toolbar>

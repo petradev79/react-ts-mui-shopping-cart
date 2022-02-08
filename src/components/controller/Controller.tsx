@@ -30,6 +30,10 @@ export type ProductType = {
   image: string;
   price: number;
   quantity: number;
+  rating: {
+    rate: number;
+    count: number;
+  };
 };
 
 const getProducts = async (category: string): Promise<ProductType[]> =>
@@ -53,7 +57,6 @@ const Controller = () => {
   };
 
   const getCategoryHandler = (category: string) => {
-    console.log(category);
     if (category) {
       setCategory(`category/${category}`);
     } else {
@@ -131,7 +134,9 @@ const Controller = () => {
         />
         <Route
           path='/details'
-          element={<Details product={selectedProduct} />}
+          element={
+            <Details product={selectedProduct} addToCart={addToCartHandler} />
+          }
         />
       </Routes>
     </div>
