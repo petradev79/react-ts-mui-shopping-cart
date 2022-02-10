@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 // Components
 import {
   AppBar,
@@ -17,6 +18,26 @@ type Props = {
 
 const Header: React.FC<Props> = ({ getItems, openCart }) => {
   const classes = useStyles();
+  const [buttonIsHighLighted, setButtonIsHighLighted] = useState(false);
+
+  const cartBtnClasses = `${classes.btn} ${
+    buttonIsHighLighted ? classes.bump : ''
+  }`;
+
+  useEffect(() => {
+    if (getItems === 0) {
+      return;
+    }
+    setButtonIsHighLighted(true);
+
+    const timer = setTimeout(() => {
+      setButtonIsHighLighted(false);
+    }, 300);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [getItems]);
 
   return (
     <AppBar className={classes.appbar} elevation={0}>
@@ -25,7 +46,7 @@ const Header: React.FC<Props> = ({ getItems, openCart }) => {
           Like to add to shopping cart
         </Typography>
         <Typography>Mario</Typography>
-        <IconButton className={classes.btn} onClick={openCart}>
+        <IconButton className={cartBtnClasses} onClick={openCart}>
           <Badge badgeContent={getItems} color='primary'>
             <ShoppingCartOutlined color='secondary' />
           </Badge>
