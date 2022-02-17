@@ -61,6 +61,7 @@ const Controller = () => {
     } else {
       setCategory('');
     }
+    navigate('/');
   };
 
   const getItemsHandler = (items: ProductType[]) =>
